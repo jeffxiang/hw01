@@ -20,13 +20,25 @@ window.builtins = {};
 // ex. builtins.trim('Hello World!    ') -> 'Hello World!'
 
 builtins.trim = function(str) {
-  let newStr = "";
+  let start_idx;
+  let end_idx;
+  let new_str = "";
   for (let i = 0; i < str.length; i++) {
     if (str[i] !== " ") {
-      newStr += str[i];
+      start_idx = i;
+      break;
     }
   }
-  return newStr;
+  for (let i = str.length - 1; i >= 0; i--) {
+    if (str[i] != " ") {
+      end_idx = i;
+      break;
+    }
+  }
+  for (let i = start_idx; i <= end_idx; i++) {
+    new_str += str[i];
+  }
+  return new_str;
 };
 
 // ----------------------------------------------------------------------------
@@ -44,8 +56,8 @@ builtins.trim = function(str) {
 // ex. builtins.search('Horizons', '') -> true
 // ex. builtins.search('Horizons', 'h') -> false
 
-builtins.search = function(sourceString, searchString) {
-  if (searchString.indexOf(sourceString)) {
+builtins.search = function(sourceString, searchString) {;
+  if (sourceString.indexOf(searchString) != -1) {
     return true;
   } else {
     return false;
@@ -65,6 +77,12 @@ builtins.search = function(sourceString, searchString) {
 // ex. builtins.reverse([123]) -> [123]
 
 builtins.reverse = function(arr) {
-  let next = arr.unshift();
-  return builtins.reverse(arr).concat(next);
+  if (arr.length == 0) {
+    return arr;
+  }
+  let res = [];
+  for (let i = arr.length - 1; i >= 0; i--) {
+    res.push(arr[i]);
+  }
+  return res;
 };
